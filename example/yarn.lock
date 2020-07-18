@@ -1041,8 +1041,8 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@woonivers/react-native-document-scanner@file:../":
-  version "0.0.0-development"
+"@woonivers/react-native-document-scanner@file:..":
+  version "2.0.1"
 
 abab@^2.0.0:
   version "2.0.2"
