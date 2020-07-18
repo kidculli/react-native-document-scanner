@@ -12,17 +12,11 @@ import java.util.List;
 
 public class DocumentScannerPackage implements ReactPackage {
 
-
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(
             new DocumentScannerModule(reactContext)
         );
-    }
-
-    // Deprecated in RN 0.47
-    public List<Class<? extends JavaScriptModule>> createJSModules() {
-        return Collections.emptyList();
     }
 
     @Override
