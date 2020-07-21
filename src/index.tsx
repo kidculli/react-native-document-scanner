@@ -1,44 +1,94 @@
-import React from 'react'
+import React from 'react';
 import {
   DeviceEventEmitter,
   findNodeHandle,
   NativeModules,
   Platform,
   requireNativeComponent,
-  ViewStyle } from 'react-native'
+  ViewStyle,
+} from 'react-native';
 
-const RNPdfScanner = requireNativeComponent('RNPdfScanner')
-const ScannerManager: any = NativeModules.RNPdfScannerManager
 
-export interface PictureTaken {
-  rectangleCoordinates?: object;
-  croppedImage: string;
-  initialImage: string;
-  width: number;
-  height: number;
+// TODO: responses are required as mentioned in this file
+
+const Scanner = requireNativeComponent('RNScanner');
+const ScannerManager: any = NativeModules.RNScannerManager;
+
+export interface PictureCallbackProps {
+  croppedImage: string,
+  initialImage: string,
 }
 
-/**
- * TODO: Change to something like this
-interface PictureTaken {
+export interface Coordinate {
+  x: number,
+  y: number,
+}
+
+export interface RectangleProps {
+  bottomLeft: Coordinate,
+  bottomRight: Coordinate,
+  topLeft: Coordinate,
+  topRight: Coordinate,
+}
+
+export interface DetectedRectangle extends RectangleProps {
+  dimensions: {
+    height: number,
+    width: number,
+  }
+}
+
+export interface PictureTaken {
   uri: string;
   base64?: string;
-  width?: number; // modify to get it
-  height?: number; // modify to get it
-  rectangleCoordinates?: object;
+  width?: number;
+  height?: number;
+  rectangleCoordinates?: RectangleProps;
   initial: {
     uri: string;
     base64?: string;
-    width: number; // modify to get it
-    height: number; // modify to get it
+    width: number;
+    height: number;
   };
 }
- */
 
-interface PdfScannerProps {
-  onPictureTaken?: (event: any) => void;
+export interface DeviceSetupCallbackProps {
+  hasCamera: boolean,
+  permissionToUseCamera: boolean,
+  flashIsAvailable: boolean,
+  previewHeightPercent: number,
+  previewWidthPercent: number,
+}
+
+export interface TorchCallbackProps {
+  enabled: boolean
+}
+
+export interface Filter {
+  id: number,
+  name: string
+}
+
+export interface AndroidPermissionObject {
+  title: string,
+  message: string,
+  buttonNegative: string,
+  buttonPositive: string,
+}
+
+interface ScannerProps {
   onRectangleDetect?: (event: any) => void;
   onProcessing?: () => void;
+  onPictureProcessed?: (args: PictureCallbackProps) => void;
+  onPictureTaken?: (args: PictureTaken) => void;
+  onDeviceSetup?: (args: DeviceSetupCallbackProps) => void;
+  onRectangleDetected?: (args: { detectedRectangle: DetectedRectangle }) => void;
+  onTorchChanged?: (args: TorchCallbackProps) => void;
+  onErrorProcessingImage?: (args: PictureCallbackProps) => void;
+  filterId?: number;
+  capturedQuality?: number,
+  styles?: object;
+  androidPermission?: AndroidPermissionObject | boolean;
   quality?: number;
   overlayColor?: number | string;
   enableTorch?: boolean;
@@ -58,7 +108,7 @@ interface PdfScannerProps {
   captureMultiple?: boolean;
 }
 
-class PdfScanner extends React.Component<PdfScannerProps> {
+class ScannerComponent extends React.Component<ScannerProps> {
   sendOnPictureTakenEvent (event: any) {
     if (!this.props.onPictureTaken) return null
     return this.props.onPictureTaken(event.nativeEvent)
@@ -84,7 +134,7 @@ class PdfScanner extends React.Component<PdfScannerProps> {
     }
   }
 
-  componentDidUpdate(prevProps: PdfScannerProps) {
+  componentDidUpdate(prevProps: ScannerProps) {
     if (Platform.OS === 'android') {
       if (this.props.onPictureTaken !== prevProps.onPictureTaken) {
         if (prevProps.onPictureTaken)
@@ -111,7 +161,7 @@ class PdfScanner extends React.Component<PdfScannerProps> {
 
   capture () {
     if (this._scannerHandle) {
-      ScannerManager.capture(this._scannerHandle)
+      ScannerManager.capture()
     }
   }
 
@@ -129,7 +179,7 @@ class PdfScanner extends React.Component<PdfScannerProps> {
 
   render () {
     return (
-      <RNPdfScanner
+      <Scanner
         ref={this._setReference}
         {...this.props}
         onPictureTaken={this.sendOnPictureTakenEvent.bind(this)}
@@ -147,4 +197,5 @@ class PdfScanner extends React.Component<PdfScannerProps> {
   }
 }
 
-export default PdfScanner
+export default ScannerComponent;
+export { ScannerManager };

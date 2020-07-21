@@ -29,7 +29,6 @@ import org.opencv.android.OpenCVLoader;
  * Created by allgood on 22/02/16.
  */
 public class CustomOpenCVLoader extends OpenCVLoader {
-
     private static ServiceConnection dummyServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -41,6 +40,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
 
         }
     };
+
     private static long myDownloadReference;
     private static LoaderCallbackInterface Callback;
     private static String Version;
@@ -73,7 +73,6 @@ public class CustomOpenCVLoader extends OpenCVLoader {
     static MyBroadcastReceiver onComplete;
 
     private static class MyBroadcastReceiver extends BroadcastReceiver {
-
         private static final String TAG = "CustomOpenCVLoader";
         private Context AppContext;
 
@@ -144,9 +143,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
     static AlertDialog.Builder waitInstallOpenCV;
     static Dialog waitOpenCVDialog;
 
-
     public static boolean initAsync(String version, final Context AppContext, LoaderCallbackInterface callback) {
-
         Version = version;
         Callback = callback;
 
@@ -157,8 +154,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
         }
 
         // if don't have google play, check for OpenCV before trying to init
-        if (!isOpenCVInstalled(Version,AppContext)) {
-
+        if (!isOpenCVInstalled(Version, AppContext)) {
             boolean isNonPlayAppAllowed = false;
             try {
                 isNonPlayAppAllowed = Settings.Secure.getInt(AppContext.getContentResolver(), Settings.Secure.INSTALL_NON_MARKET_APPS) == 1;

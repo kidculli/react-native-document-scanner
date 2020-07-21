@@ -6,7 +6,6 @@ import org.opencv.core.Mat;
  * Created by allgood on 06/03/16.
  */
 public class PreviewFrame {
-
     private final boolean previewOnly;
     private Mat frame;
     private boolean autoMode;

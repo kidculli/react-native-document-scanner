@@ -11,16 +11,13 @@ import org.opencv.core.Size;
  * Created by allgood on 05/03/16.
  */
 public class ScannedDocument {
-
     public Mat original;
     public Mat processed;
     public Quadrilateral quadrilateral;
     public Point[] previewPoints;
     public Size previewSize;
     public Size originalSize;
-
     public Point[] originalPoints;
-
     public int heightWithRatio;
     public int widthWithRatio;
 
@@ -56,8 +53,6 @@ public class ScannedDocument {
         WritableMap bottomLeft = new WritableNativeMap();
         bottomLeft.putDouble("x", this.originalPoints[3].x);
         bottomLeft.putDouble("y", this.originalPoints[3].y);
-
-
 
         rectangleCoordinates.putMap("topLeft", topLeft);
         rectangleCoordinates.putMap("topRight", topRight);

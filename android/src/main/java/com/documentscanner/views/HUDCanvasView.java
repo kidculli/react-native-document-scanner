@@ -36,7 +36,6 @@ public class HUDCanvasView extends View {
         private final Paint mPaint;
         private final Paint mBorder;
 
-
         HUDShape(Shape shape, Paint paint, Paint border) {
             mShape = shape;
             mPaint = paint;
@@ -78,12 +77,10 @@ public class HUDCanvasView extends View {
 
     }
 
-
     public void addShape(Shape shape , Paint paint , Paint border ) {
         HUDShape hudShape = new HUDShape(shape, paint , border );
         shapes.add(hudShape);
     }
-
 
     public void clear() {
         shapes.clear();
