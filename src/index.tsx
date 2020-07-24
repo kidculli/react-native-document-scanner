@@ -39,17 +39,10 @@ export interface DetectedRectangle extends RectangleProps {
 }
 
 export interface PictureTaken {
-  uri: string;
-  base64?: string;
+  initialImage: string;
   width?: number;
   height?: number;
   rectangleCoordinates?: RectangleProps;
-  initial: {
-    uri: string;
-    base64?: string;
-    width: number;
-    height: number;
-  };
 }
 
 export interface DeviceSetupCallbackProps {
@@ -77,6 +70,11 @@ export interface AndroidPermissionObject {
 }
 
 interface ScannerProps {
+  start?: () => void;
+  stop?: () => void;
+  focus?: () => void;
+  cleanup?: () => void;
+  capture?: () => void;
   onRectangleDetect?: (event: any) => void;
   onProcessing?: () => void;
   onPictureProcessed?: (args: PictureCallbackProps) => void;
@@ -92,6 +90,7 @@ interface ScannerProps {
   quality?: number;
   overlayColor?: number | string;
   enableTorch?: boolean;
+  saveOnDevice?: boolean;
   useFrontCam?: boolean;
   saturation?: number;
   brightness?: number;
@@ -106,6 +105,11 @@ interface ScannerProps {
   useBase64?: boolean;
   saveInAppDocument?: boolean;
   captureMultiple?: boolean;
+  showBorder?: boolean;
+  faceDetection?: boolean;
+  cropHeight?: boolean;
+  cropWidth?: boolean;
+  doublePageScan?: boolean; // book scan
 }
 
 class ScannerComponent extends React.Component<ScannerProps> {

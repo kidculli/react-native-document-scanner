@@ -1,9 +1,8 @@
 {
-  "name": "@woonivers/react-native-document-scanner",
-  "version": "2.1.0",
-  "description": "Scan documents, automatic border detection, automatic crop",
+  "name": "@28harishkumar/react-native-scanner",
+  "version": "3.0.0",
+  "description": "Scan documents, automatic border detection",
   "main": "src/index.tsx",
-  "types": "lib/typescript/index.d.ts",
   "files": [
     "/android",
     "!/android/build",

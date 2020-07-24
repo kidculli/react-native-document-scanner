@@ -18,23 +18,6 @@ public class DocumentScannerModule extends ReactContextBaseJavaModule{
     public String getName() {
         return "RNScannerManager";
     }
-
-    // @ReactMethod
-    // public void capture(final int viewTag) {
-    //     final ReactApplicationContext context = getReactApplicationContext();
-    //     UIManagerModule uiManager = context.getNativeModule(UIManagerModule.class);
-    //     uiManager.addUIBlock(new UIBlock() {
-    //         @Override
-    //         public void execute(NativeViewHierarchyManager nativeViewHierarchyManager) {
-    //             try {
-    //                 MainView view = (MainView) nativeViewHierarchyManager.resolveView(viewTag);
-    //                 view.capture();
-    //             } catch (Exception e) {
-    //                 e.printStackTrace();
-    //             }
-    //         }
-    //     });
-    // }
     
     @ReactMethod
     public void start(){
@@ -64,20 +47,5 @@ public class DocumentScannerModule extends ReactContextBaseJavaModule{
     public void capture(){
         MainView view = MainView.getInstance();
         view.capture();
-    }
-
-    @ReactMethod
-    public WritableMap applyImageFilter(String image, String filter){
-        // TODO: set base64 image
-        // apply filter
-        // return images
-
-        /**
-         * return {
-         *   image: base64 filteredImage
-         * }
-         */
-
-        return null;
     }
 }

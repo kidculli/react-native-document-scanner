@@ -6,10 +6,8 @@
 
 1. Upgrade to latest React-Native version
 2. Edge detection algo correction
-3. Optional Border on edge detection frame
-4. Photo capture (face detection & fixed size)
-5. Double rectangle detection (like book)
-6. More filters (only background clear)
-7. Merge Images into one
-8. Shape coordinate in response (onCapture)
-9. Filters on file system image (without camera).
+3. Improve image quality
+4. Optional Border on edge detection frame
+5. Photo capture (face detection & fixed sizes)
+6. Double rectangle detection (like book)
+7. Shape coordinate in response (onCapture)

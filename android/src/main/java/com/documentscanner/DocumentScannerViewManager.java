@@ -128,6 +128,8 @@ public class DocumentScannerViewManager extends ViewGroupManager<MainView> {
             "onDeviceSetup", MapBuilder.of("registrationName", "onDeviceSetup"),
             "onTorchChanged", MapBuilder.of("registrationName", "onTorchChanged"),
             "onRectangleDetected", MapBuilder.of("registrationName", "onRectangleDetected"),
+
+            // onPictureTaken is conflicting with existing function and never been triggered
             "onPictureTaken", MapBuilder.of("registrationName", "onPictureTaken"),
             "onPictureProcessed", MapBuilder.of("registrationName", "onPictureProcessed"),
             "onErrorProcessingImage", MapBuilder.of("registrationName", "onErrorProcessingImage")
@@ -137,9 +139,4 @@ public class DocumentScannerViewManager extends ViewGroupManager<MainView> {
     private void dispatchEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
     }
-
-    // @ReactProp(name = "documentAnimation", defaultBoolean = false)
-    // public void setDocumentAnimation(MainView view, boolean animate) {
-    //     // TODO: What is documentAnimation?
-    // }
 }
