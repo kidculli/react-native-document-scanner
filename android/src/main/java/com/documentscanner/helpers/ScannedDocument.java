@@ -6,6 +6,7 @@ import com.facebook.react.bridge.WritableNativeMap;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Size;
+import org.opencv.core.CvType;
 
 /**
  * Created by allgood on 05/03/16.
@@ -22,7 +23,9 @@ public class ScannedDocument {
     public int widthWithRatio;
 
     public ScannedDocument(Mat original) {
-        this.original = original;
+        // this.original = new Mat(original.size(), CvType.CV_8UC4);
+        // original.copyTo(this.original);
+        this.original = original.clone();
     }
 
     public Mat getProcessed() {
@@ -37,22 +40,25 @@ public class ScannedDocument {
     public WritableMap previewPointsAsHash() {
         if (this.previewPoints == null) return null;
         WritableMap rectangleCoordinates = new WritableNativeMap();
+        double xRatio = this.originalSize.height / this.widthWithRatio;
+        double yRatio = this.originalSize.width / this.heightWithRatio;
+
 
         WritableMap topLeft = new WritableNativeMap();
-        topLeft.putDouble("x", this.originalPoints[0].x);
-        topLeft.putDouble("y", this.originalPoints[0].y);
+        topLeft.putDouble("x", this.originalPoints[0].x * xRatio);
+        topLeft.putDouble("y", this.originalPoints[0].y * yRatio);
 
         WritableMap topRight = new WritableNativeMap();
-        topRight.putDouble("x", this.originalPoints[1].x);
-        topRight.putDouble("y", this.originalPoints[1].y);
+        topRight.putDouble("x", this.originalPoints[1].x * xRatio);
+        topRight.putDouble("y", this.originalPoints[1].y * yRatio);
 
         WritableMap bottomRight = new WritableNativeMap();
-        bottomRight.putDouble("x", this.originalPoints[2].x);
-        bottomRight.putDouble("y", this.originalPoints[2].y);
+        bottomRight.putDouble("x", this.originalPoints[2].x * xRatio);
+        bottomRight.putDouble("y", this.originalPoints[2].y * yRatio);
 
         WritableMap bottomLeft = new WritableNativeMap();
-        bottomLeft.putDouble("x", this.originalPoints[3].x);
-        bottomLeft.putDouble("y", this.originalPoints[3].y);
+        bottomLeft.putDouble("x", this.originalPoints[3].x * xRatio);
+        bottomLeft.putDouble("y", this.originalPoints[3].y * yRatio);
 
         rectangleCoordinates.putMap("topLeft", topLeft);
         rectangleCoordinates.putMap("topRight", topRight);

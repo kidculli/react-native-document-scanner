@@ -136,8 +136,8 @@ public class ImageProcessor extends Handler {
     }
 
     private ScannedDocument detectDocument(Mat inputRgba) {
-        ArrayList<MatOfPoint> contours = findContours(inputRgba);
         ScannedDocument sd = new ScannedDocument(inputRgba);
+        ArrayList<MatOfPoint> contours = findContours(inputRgba);
 
         sd.originalSize = inputRgba.size();
         Quadrilateral quad = getQuadrilateral(contours, sd.originalSize);
@@ -149,10 +149,26 @@ public class ImageProcessor extends Handler {
         Mat doc;
         if (quad != null) {
             sd.originalPoints = new Point[4];
-            sd.originalPoints[0] = new Point(sd.widthWithRatio - quad.points[3].y, quad.points[3].x); // TopLeft
-            sd.originalPoints[1] = new Point(sd.widthWithRatio - quad.points[0].y, quad.points[0].x); // TopRight
-            sd.originalPoints[2] = new Point(sd.widthWithRatio - quad.points[1].y, quad.points[1].x); // BottomRight
-            sd.originalPoints[3] = new Point(sd.widthWithRatio - quad.points[2].y, quad.points[2].x); // BottomLeft
+
+            // TopLeft
+            sd.originalPoints[0] = new Point(
+              (sd.widthWithRatio - quad.points[3].y), 
+              quad.points[3].x);
+
+            // TopRight
+            sd.originalPoints[1] = new Point(
+              (sd.widthWithRatio - quad.points[0].y), 
+              quad.points[0].x);
+            
+            // BottomRight
+            sd.originalPoints[2] = new Point(
+              (sd.widthWithRatio - quad.points[1].y), 
+              quad.points[1].x);
+
+            // BottomLeft
+            sd.originalPoints[3] = new Point(
+              (sd.widthWithRatio - quad.points[2].y), 
+              quad.points[2].x);
 
             sd.quadrilateral = quad;
             sd.previewPoints = mPreviewPoints;

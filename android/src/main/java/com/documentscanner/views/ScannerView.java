@@ -610,11 +610,13 @@ public class ScannerView extends ShapeDetectionController {
             if (result) Log.d(TAG, "wrote: created folder " + folder.getPath());
             else Log.d(TAG, "Not possible to create folder"); // TODO: Manage this error better
         }
-        fileName = folderDir + "/" + folderName + "/" + UUID.randomUUID()
-                + ".jpg";
 
-        Mat endDoc = new Mat(Double.valueOf(doc.size().width).intValue(), Double.valueOf(doc.size().height).intValue(),
-                CvType.CV_8UC4);
+        fileName = folderDir + "/" + folderName + "/" + UUID.randomUUID() + ".jpg";
+
+        Mat endDoc = new Mat(
+          Double.valueOf(doc.size().width).intValue(), 
+          Double.valueOf(doc.size().height).intValue(),
+          CvType.CV_8UC4);
 
         Core.flip(doc.t(), endDoc, 1);
 
@@ -633,8 +635,8 @@ public class ScannerView extends ShapeDetectionController {
         String initialFileName = this.saveToDirectory(scannedDocument.original);
 
         if (this.listener != null) {
-            data.putInt("height", scannedDocument.heightWithRatio);
-            data.putInt("width", scannedDocument.widthWithRatio);
+            data.putInt("height", Double.valueOf(scannedDocument.originalSize.width).intValue());
+            data.putInt("width", Double.valueOf(scannedDocument.originalSize.height).intValue());
             // data.putString("croppedImage", "file://" + fileName);
             data.putString("initialImage", "file://" + initialFileName);
             data.putMap("rectangleCoordinates", scannedDocument.previewPointsAsHash());
