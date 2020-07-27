@@ -488,9 +488,7 @@ public class ScannerView extends ShapeDetectionController {
             if (!manualCapture) {
                 sendImageProcessorMessage("previewFrame", new PreviewFrame(mat, true, false));
             }
-
         }
-
     }
 
     public void invalidateHUD() {
@@ -621,14 +619,12 @@ public class ScannerView extends ShapeDetectionController {
         Core.flip(doc.t(), endDoc, 1);
 
         Imgcodecs.imwrite(fileName, endDoc);
-
         endDoc.release();
-
         return fileName;
     }
 
     public void saveDocument(ScannedDocument scannedDocument) {
-        Mat doc = (scannedDocument.processed != null) ? scannedDocument.processed : scannedDocument.original;
+        // Mat doc = (scannedDocument.processed != null) ? scannedDocument.processed : scannedDocument.original;
 
         WritableMap data = new WritableNativeMap();
         // String fileName = this.saveToDirectory(doc);
@@ -650,7 +646,6 @@ public class ScannerView extends ShapeDetectionController {
         // }
 
         refreshCamera();
-
     }
 
     private List<Size> getResolutionList() {

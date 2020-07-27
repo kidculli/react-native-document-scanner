@@ -23,8 +23,6 @@ public class ScannedDocument {
     public int widthWithRatio;
 
     public ScannedDocument(Mat original) {
-        // this.original = new Mat(original.size(), CvType.CV_8UC4);
-        // original.copyTo(this.original);
         this.original = original.clone();
     }
 
