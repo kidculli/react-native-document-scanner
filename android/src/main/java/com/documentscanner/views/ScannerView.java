@@ -626,24 +626,27 @@ public class ScannerView extends ShapeDetectionController {
     public void saveDocument(ScannedDocument scannedDocument) {
         // Mat doc = (scannedDocument.processed != null) ? scannedDocument.processed : scannedDocument.original;
 
-        WritableMap data = new WritableNativeMap();
-        // String fileName = this.saveToDirectory(doc);
+        String fileName = this.saveToDirectory(doc);
         String initialFileName = this.saveToDirectory(scannedDocument.original);
 
+        WritableMap data = new WritableNativeMap();
+
         if (this.listener != null) {
-            data.putInt("height", Double.valueOf(scannedDocument.originalSize.width).intValue());
-            data.putInt("width", Double.valueOf(scannedDocument.originalSize.height).intValue());
-            // data.putString("croppedImage", "file://" + fileName);
+            data.putInt("height", scannedDocument.heightWithRatio);
+            data.putInt("width", scannedDocument.widthWithRatio);
+            data.putString("croppedImage", "file://" + fileName);
             data.putString("initialImage", "file://" + initialFileName);
             data.putMap("rectangleCoordinates", scannedDocument.previewPointsAsHash());
 
             this.listener.onPictureTaken(data);
         }
 
-        // if (this.saveOnDevice) {
-        //     // TODO: Change name addImageToGallery to saveOnDevice
-        //     addImageToGallery(fileName, mContext);
-        // }
+        Log.d(TAG, "wrote: " + fileName);
+
+        if (this.saveOnDevice) {
+            // TODO: Change name addImageToGallery to saveOnDevice
+            addImageToGallery(fileName, mContext);
+        }
 
         refreshCamera();
     }
