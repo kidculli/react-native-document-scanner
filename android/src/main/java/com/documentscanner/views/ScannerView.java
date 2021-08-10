@@ -26,18 +26,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import com.documentscanner.R;
-import com.documentscanner.helpers.ImageProcessor;
+import com.documentscanner.camera.ShapeDetectionController;
 import com.documentscanner.helpers.CustomOpenCVLoader;
+import com.documentscanner.helpers.ImageProcessor;
 import com.documentscanner.helpers.ImageProcessorMessage;
 import com.documentscanner.helpers.PreviewFrame;
 import com.documentscanner.helpers.ScannedDocument;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
@@ -46,13 +44,11 @@ import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
-import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.documentscanner.camera.ShapeDetectionController;
 
 import static com.documentscanner.helpers.Utils.addImageToGallery;
 
@@ -626,7 +622,7 @@ public class ScannerView extends ShapeDetectionController {
     public void saveDocument(ScannedDocument scannedDocument) {
         String croppedFileName =  null;
         if(scannedDocument.processed != null) {
-           croppedFileName = this.saveToDirectory(doc);
+           croppedFileName = this.saveToDirectory(scannedDocument.processed);
         }
 
         String initialFileName = this.saveToDirectory(scannedDocument.original);
